@@ -16,19 +16,33 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
+###########################################################################
+# Secrets managements
+import json
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'g^%t%(h1ghce5r*7vw4(8sb3!40t&mpwyky+&586dr!9%&bjnr'
+# Normally you should not import ANYTHING from Django directly
+# into your settings, but ImproperlyConfigured is an exception.
+from django.core.exceptions import ImproperlyConfigured
+# JSON-based secrets module
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+with open(os.path.join(BASE_DIR, "settings/secrets.json")) as f:
+    secrets = json.loads(f.read())
+
+
+def get_secret(setting, secrets=secrets):
+    """Get the secret variable or return explicit exception."""
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {0} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
+
+###########################################################################
 
 ALLOWED_HOSTS = []
 
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',

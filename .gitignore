@@ -2,3 +2,5 @@ env/
 *.pyo
 *.pyc
 __pycache__/
+secrets.json
+.#*
