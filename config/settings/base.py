@@ -17,13 +17,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 ###########################################################################
-# Secrets managements
+# Secrets management
 import json
-
-# Normally you should not import ANYTHING from Django directly
-# into your settings, but ImproperlyConfigured is an exception.
-from django.core.exceptions import ImproperlyConfigured
-# JSON-based secrets module
 
 
 with open(os.path.join(BASE_DIR, "settings/secrets.json")) as f:
@@ -35,13 +30,12 @@ def get_secret(setting, secrets=secrets):
     try:
         return secrets[setting]
     except KeyError:
-        error_msg = "Set the {0} environment variable".format(setting)
-        raise ImproperlyConfigured(error_msg)
+        error_msg = "Setting does not exist in secret.json: {}".format(setting)
+        raise Exception(error_msg)
 
 ###########################################################################
 
 ALLOWED_HOSTS = []
-
 
 
 INSTALLED_APPS = [
@@ -90,11 +84,16 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'django_website',
+        'USER': 'django_website',
+        'PASSWORD': get_secret("DATABASE_PASSWORD"),
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
+SECRET_KEY = get_secret("SECRET_KEY")
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -120,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Amsterdam'
 
 USE_I18N = True
 
