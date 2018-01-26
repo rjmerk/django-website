@@ -1,0 +1,10 @@
+{% extends "base.html"%}
+
+{% block title %}{{ article.title }}{% endblock title %}
+
+{% block center-column %}
+
+<h1>{{ article.title }}</h1>
+{{ article.content|safe }}
+
+{% endblock center-column %}

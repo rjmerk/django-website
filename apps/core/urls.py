@@ -1,9 +1,12 @@
 from django.conf.urls import url
 
-from apps.core.views import IndexView
+from apps.core import views
 
 urlpatterns = [
     url(r'^$',
-        IndexView.as_view(),
+        views.Index.as_view(),
         name="index"),
+    url(r'^preview/(?P<slug>[-\w]+)/$',
+        views.ArticleDetail.as_view(),
+        name="article-preview"),
 ]
