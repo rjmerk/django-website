@@ -11,6 +11,9 @@ class ArticleAdmin(admin.ModelAdmin):
     readonly_fields = ["preview_link"]
 
     def preview_link(self, instance):
-        url = reverse("article-preview", kwargs={"slug": instance.slug})
-        html = '<a href="{}">{}</a>'.format(url, instance.title)
+        if instance.slug:
+            url = reverse("article-preview", kwargs={"slug": instance.slug})
+            html = '<a href="{}">{}</a>'.format(url, instance.title)
+        else:
+            html = ''
         return mark_safe(html)
