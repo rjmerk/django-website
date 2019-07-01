@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.core.validators import (
     MaxValueValidator,
     MinValueValidator,
@@ -8,6 +9,9 @@ from django.db import models
 class FoodCategory(models.Model):
     name = models.CharField(
         max_length=100)
+
+    def __str__(self):
+        return self.name
 
 
 class Food(models.Model):
@@ -25,3 +29,35 @@ class Food(models.Model):
         FoodCategory,
         on_delete=models.PROTECT,
     )
+
+    def __str__(self):
+        return self.name
+
+
+class Portion(models.Model):
+    BREAKFAST = "breakfast"
+    LUNCH = "lunch"
+    DINNER = "dinner"
+    SNACK = "snack"
+
+    food = models.ForeignKey(
+        Food,
+        on_delete=models.PROTECT,
+    )
+    amount = models.PositiveIntegerField()
+    day = models.DateField(
+        blank=True,
+        default=datetime.now,
+    )
+    meal = models.TextField(
+        choices=(
+            (BREAKFAST, "breakfast"),
+            (LUNCH, "lunch"),
+            (DINNER, "dinner"),
+            (SNACK, "snack")
+        ),
+        default=SNACK,
+    )
+
+    def __str__(self):
+        return f" {self.amount}g {self.food}"
