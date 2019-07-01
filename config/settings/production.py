@@ -1,17 +1,15 @@
 from .base import *
 
-DEBUG = FALSE
-
-SECRET_KEY = get_secret("SECRET_KEY")
+DEBUG = False
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': get_secret("DATABASE_NAME"),
-        'USER': get_secret("DATABASE_USER"),
+        'NAME': "website",
+        'USER': "website",
         'PASSWORD': get_secret("DATABASE_PASSWORD"),
-        'HOST': get_secret("DATABASE_HOST"),
-        'PORT': get_secret("DATABASE_PORT"),
+        'HOST': "127.0.0.1",
+        'PORT': 5432
     }
 }
 

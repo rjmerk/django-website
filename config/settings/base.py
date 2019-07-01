@@ -78,20 +78,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django_website',
-        'USER': 'django_website',
-        'PASSWORD': get_secret("DATABASE_PASSWORD"),
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}
+# DATABASES = {
+# Configure your database in an environment-specific settings file.
+# See development.py if you want to run the project on your computer.
+# }
 
 SECRET_KEY = get_secret("SECRET_KEY")
 
