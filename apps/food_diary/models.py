@@ -60,4 +60,4 @@ class Portion(models.Model):
     )
 
     def __str__(self):
-        return f" {self.amount}g {self.food}"
+        return "{} {}".format(self.amount, self.food)
